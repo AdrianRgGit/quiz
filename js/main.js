@@ -37,8 +37,12 @@ let totalAnswersArray = [];
 let questionString = "";
 let correctAnswerString = "";
 let incorrectAnswersString = "";
+let answerSelected = "";
+
+let newButton;
 
 let indexQuestion = 0;
+let idAnswer = 0;
 
 // Api. En la api puedes seleccionar el número de pregutnas y su dificultad y tipo.
 // Obtenemos los datos de la api y los guardamos en variables globales
@@ -62,40 +66,68 @@ axios
   })
   .catch((err) => console.log(err));
 
+// Timers
+const nextQuestionTime = () =>
+  setTimeout(() => console.log("Siguiente pregunta"), 3000);
+
 // Funcionalidad
+// Incrementamos en uno el índice y cambiamos de pregunta
+const nextQuestion = () => {
+  indexQuestion++;
+  console.log(indexQuestion);
+};
 
-const nextQuestion = () => {};
-
-const checkAnswers = () => {
-  if (newButtonSelector.value == correctAnswerString) {
+// Comprobamos que la respuesta es correcta o no
+const checkAnswers = (answerSelected) => {
+  console.log()
+  console.log(answerSelected);
+  if (answerSelected === true) {
     console.log("correcto");
+    nextQuestion();
   } else {
     console.log("incorrecto");
+    nextQuestion();
   }
+};
+
+const selectAnswer = () => {
+  answerSelected = newButton.dataset;
+  checkAnswers(answerSelected);
 };
 
 // Escribimos en el dom la pregunta y las respuestas
 const writeAnswers = () => {
   totalAnswersArray.forEach((answer) => {
-    const newButton = document.createElement("button");
+    newButton = document.createElement("button");
     newButton.innerText = answer;
+
     newButton.setAttribute("value", answer);
+    newButton.setAttribute("id", idAnswer++);
     newButton.setAttribute("class", "response");
 
+    if(newButton.value == correctAnswerString){
+      newButton.dataset.correct = true
+    }
+
     questionContainerSelector.appendChild(newButton);
-    checkAnswers();
   });
+  selectAnswer();
 };
 
-const writeQuestion = () => {
+const writeQuestion = (question) => {
   questionTextSelector.innerHTML = questionString;
   writeAnswers();
+};
+
+const resetQuestion = () => {
+  questionTextSelector.innerHTML = "";
+  writeQuestion();
 };
 
 const startQuest = () => {
   indexQuestion = 0;
   startInputSelector.classList.add("hide");
-  writeQuestion();
+  resetQuestion();
 };
 
 // Guardamos en array las respuestas para tenerlas todas juntas
@@ -142,5 +174,5 @@ const goGraphicsPage = () => {
 // Events click
 returnInputSelector.addEventListener("click", goHomePage);
 startInputSelector.addEventListener("click", goQuestionPage);
-nextInputSelector.addEventListener("click", goResultsPage);
+nextInputSelector.addEventListener("click", nextQuestion);
 finishInputSelector.addEventListener("click", goGraphicsPage);
