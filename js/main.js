@@ -30,7 +30,10 @@ const questionTextSelector = document.querySelector("#question-text");
 const hideSelector = document.querySelectorAll(".hide");
 
 // Variables globales
+let objectQuestions = {};
+
 let questionsArray = [];
+let usedQuestionsArray = [];
 let incorrectAnswersArray = [];
 let totalAnswersArray = [];
 
@@ -73,24 +76,23 @@ const nextQuestionTime = () =>
 // Funcionalidad
 // Incrementamos en uno el índice y cambiamos de pregunta
 const nextQuestion = () => {
-  indexQuestion++;
-  console.log(indexQuestion);
+  questionsArray;
 };
 
 // Comprobamos que la respuesta es correcta o no
 const checkAnswers = (answerSelected) => {
-  console.log()
   console.log(answerSelected);
   if (answerSelected === true) {
     console.log("correcto");
-    nextQuestion();
+    // nextQuestion();
   } else {
     console.log("incorrecto");
-    nextQuestion();
+    // nextQuestion();
   }
 };
 
 const selectAnswer = () => {
+  console.log(newButton)
   answerSelected = newButton.dataset;
   checkAnswers(answerSelected);
 };
@@ -101,20 +103,22 @@ const writeAnswers = () => {
     newButton = document.createElement("button");
     newButton.innerText = answer;
 
-    newButton.setAttribute("value", answer);
     newButton.setAttribute("id", idAnswer++);
-    newButton.setAttribute("class", "response");
+    newButton.setAttribute("class", "answer");
+    newButton.setAttribute("value", answer);
 
-    if(newButton.value == correctAnswerString){
-      newButton.dataset.correct = true
+    if (newButton.value == correctAnswerString) {
+      newButton.dataset.correct = true;
+    } else {
+      newButton.dataset.correct = false;
     }
-
+    // console.log(newButton);
+    newButton.addEventListener("click", selectAnswer);
     questionContainerSelector.appendChild(newButton);
   });
-  selectAnswer();
 };
 
-const writeQuestion = (question) => {
+const writeQuestion = () => {
   questionTextSelector.innerHTML = questionString;
   writeAnswers();
 };
