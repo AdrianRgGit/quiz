@@ -18,44 +18,88 @@ const nextInputSelector = document.querySelector("#next-input");
 const finishInputSelector = document.querySelector("#finish-input");
 const returnInputSelector = document.querySelector("#return-input");
 
+// Containers
+const questionContainerSelector = document.querySelector("#question-container");
 
+// Párrafos
+const questionTextSelector = document.querySelector("#question-text");
 
 // Clases
 const hideSelector = document.querySelectorAll(".hide");
 
+// Variables globales
+let questionsArray = [];
+let incorrectAnswersArray = [];
+let totalAnswersArray = [];
+
+let questionString = "";
+let correctAnswerString = "";
+let incorrectAnswersString = "";
+
 // Ocultar páginas
-const hidePages = () =>{
-    homePageSelector.classList.add("hide")
-    questionPageSelector.classList.add("hide")
-    resultsPageSelector.classList.add("hide")
-    graphicsPageSelector.classList.add("hide")
-}
+const hidePages = () => {
+  homePageSelector.classList.add("hide");
+  questionPageSelector.classList.add("hide");
+  resultsPageSelector.classList.add("hide");
+  graphicsPageSelector.classList.add("hide");
+};
+
+// Funcionalidad
+// Escribimos en el dom la pregunta
+const writeQuestion = () => {
+  questionTextSelector.innerHTML = questions;
+};
+
+const writeAnswers = () => {};
+
+// Escribimos en el dom las respuestas con botones
 
 // Moverse entre páginas
 const goHomePage = () => {
-    hidePages();
-    homePageSelector.classList.remove("hide")
-}
+  hidePages();
+  homePageSelector.classList.remove("hide");
+};
 
 const goQuestionPage = () => {
-    hidePages();
-    questionPageSelector.classList.remove("hide")
-}
+  hidePages();
+  writeQuestion();
+  questionPageSelector.classList.remove("hide");
+};
 
 const goResultsPage = () => {
-    hidePages();
-    resultsPageSelector.classList.remove("hide")
-}
+  hidePages();
+  resultsPageSelector.classList.remove("hide");
+};
 
 const goGraphicsPage = () => {
-    hidePages();
-    graphicsPageSelector.classList.remove("hide")
-}
+  hidePages();
+  graphicsPageSelector.classList.remove("hide");
+};
+
+// Api. En la api puedes seleccionar el número de pregutnas y su dificultad y tipo.
+// Obtenemos los datos de la api y los guardamos en variables globales
+axios
+  .get("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy")
+  .then((res) => {
+    questionsArray = res.data.results;
+
+    // console.log(res);
+
+    questionsArray.forEach((objectQuestions) => {
+      questionString = objectQuestions.question;
+      correctAnswerString = objectQuestions.correct_answer;
+      incorrectAnswersArray = objectQuestions.incorrect_answers;
+
+      // console.log(incorrectAnswersArray);
+    });
+    incorrectAnswersArray.forEach((incorrectAnswer) => {
+      incorrectAnswersString = incorrectAnswer;
+    });
+  })
+  .catch((err) => console.log(err));
 
 // Events click
-startInputSelector.addEventListener("click", goQuestionPage)
-nextInputSelector.addEventListener("click", goResultsPage)
-finishInputSelector.addEventListener("click", goGraphicsPage)
-returnInputSelector.addEventListener("click", goHomePage)
-
-
+returnInputSelector.addEventListener("click", goHomePage);
+startInputSelector.addEventListener("click", goQuestionPage);
+nextInputSelector.addEventListener("click", goResultsPage);
+finishInputSelector.addEventListener("click", goGraphicsPage);
