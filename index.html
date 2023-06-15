@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <title>Quiz</title>
+  </head>
+
+  <body>
+    <!-- Barra de navegación -->
+    <nav id="nav-bar">
+      <a id="home-page-nav">Home</a>
+      <a id="question-page-nav">Question</a>
+      <a id="results-page-nav">Results</a>
+      <a id="graphics-page-nav">Graphics</a>
+    </nav>
+    <!-- Fin barra de navegación -->
+
+    <!-- Vista principal -->
+    <div id="home-page">
+      <h1>Esta es la pantalla de home</h1>
+    </div>
+    <!-- Fin Vista principal -->
+
+    <!-- Vista preguntas -->
+    <div id="question-page" class="hide">
+      <h1>Esta es la pantalla de question</h1>
+    </div>
+    <!-- Fin Vista preguntas -->
+
+    <!-- Vista results -->
+    <div id="results-page" class="hide">
+      <h1>Esta es la pantalla de results</h1>
+    </div>
+    <!-- Fin Vista results -->
+
+    <!-- Vista graphics -->
+    <div id="graphics-page" class="hide">
+      <h1>Esta es la pantalla de graphics</h1>
+    </div>
+    <!-- Fin Vista graphics -->
+
+    <!-- Inputs -->
+    <div id="inputsContainer">
+        <input type="button" value="Start" id="start-input">
+        <input type="button" value="Next" id="next-input">
+        <input type="button" value="Finish" id="finish-input">
+        <input type="button" value="Return" id="return-input">
+    </div>
+    <!-- Fin inputs -->
+
+    <!-- Links js -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
