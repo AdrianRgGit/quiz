@@ -31,13 +31,15 @@ const hideSelector = document.querySelectorAll(".hide");
 
 // Variables globales
 let objectQuestions = {};
+let selectQuestion = {};
 
+let questionsArrayObjects = [];
 let questionsArray = [];
-let usedQuestionsArray = [];
+let usedquestionsArrayObjects = [];
 let incorrectAnswersArray = [];
 let totalAnswersArray = [];
 
-let questionString = "";
+let questionsString = "";
 let correctAnswerString = "";
 let incorrectAnswersString = "";
 let answerSelected = "";
@@ -52,17 +54,19 @@ let idAnswer = 0;
 axios
   .get("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy")
   .then((res) => {
-    questionsArray = res.data.results;
+    questionsArrayObjects = res.data.results;
 
     console.log(res);
 
-    questionsArray.forEach((objectQuestions) => {
-      questionString = objectQuestions.question;
+    // Adaptamos la api para nuestro uso
+    questionsArrayObjects.forEach((objectQuestions) => {
+      questionsString = objectQuestions.question;
       correctAnswerString = objectQuestions.correct_answer;
       incorrectAnswersArray = objectQuestions.incorrect_answers;
+      questionsArray.push(questionsString);
 
-      // console.log(incorrectAnswersArray);
     });
+    // console.log(questionsArrayObjects[2]);
     incorrectAnswersArray.forEach((incorrectAnswer) => {
       incorrectAnswersString = incorrectAnswer;
     });
@@ -74,75 +78,48 @@ const nextQuestionTime = () =>
   setTimeout(() => console.log("Siguiente pregunta"), 3000);
 
 // Funcionalidad
-// Incrementamos en uno el índice y cambiamos de pregunta
-const nextQuestion = () => {
-  questionsArray;
-};
 
-// Comprobamos que la respuesta es correcta o no
-const checkAnswers = (answerSelected) => {
-  console.log(answerSelected);
-  if (answerSelected === true) {
-    console.log("correcto");
-    // nextQuestion();
-  } else {
-    console.log("incorrecto");
-    // nextQuestion();
-  }
-};
+// Comprobar respuesta
+const checkAnswer = () => {};
 
-const selectAnswer = () => {
-  console.log(newButton)
-  answerSelected = newButton.dataset;
-  checkAnswers(answerSelected);
-};
+// Seleccionar respuesta
+const selectAnswer = () => {};
 
-// Escribimos en el dom la pregunta y las respuestas
-const writeAnswers = () => {
+// Mostrar respuestas
+const showAnswers = () => {
   totalAnswersArray.forEach((answer) => {
-    newButton = document.createElement("button");
-    newButton.innerText = answer;
-
-    newButton.setAttribute("id", idAnswer++);
-    newButton.setAttribute("class", "answer");
-    newButton.setAttribute("value", answer);
-
-    if (newButton.value == correctAnswerString) {
-      newButton.dataset.correct = true;
-    } else {
-      newButton.dataset.correct = false;
-    }
-    // console.log(newButton);
-    newButton.addEventListener("click", selectAnswer);
-    questionContainerSelector.appendChild(newButton);
+    console.log(answer);
   });
 };
 
-const writeQuestion = () => {
-  questionTextSelector.innerHTML = questionString;
-  writeAnswers();
+// Mostrar pregunta
+const showQuestion = (questionsString) => {
+  questionTextSelector.innerHTML = questionsString;
+  setAnswers();
 };
 
-const resetQuestion = () => {
-  questionTextSelector.innerHTML = "";
-  writeQuestion();
+// Preparamos respuesta
+const setAnswers = () => {
+  console.log(incorrectAnswersArray);
+  console.log(correctAnswerString);
 };
 
-const startQuest = () => {
+// Preparamos pregunta
+const setQuestion = () => {
+  questionsString = questionsArray[indexQuestion];
+  showQuestion(questionsString);
+};
+
+// Siguiente pregunta
+const nextQuestion = () => {
+  indexQuestion++;
+  setQuestion();
+};
+
+// Empezamos el juego
+const startGame = () => {
   indexQuestion = 0;
-  startInputSelector.classList.add("hide");
-  resetQuestion();
-};
-
-// Guardamos en array las respuestas para tenerlas todas juntas
-const totalAnswers = () => {
-  incorrectAnswersArray.forEach((incorrectAnswer) => {
-    totalAnswersArray.push(incorrectAnswer);
-  });
-
-  totalAnswersArray.push(correctAnswerString);
-
-  startQuest();
+  setQuestion();
 };
 
 // Ocultar páginas
@@ -153,16 +130,27 @@ const hidePages = () => {
   graphicsPageSelector.classList.add("hide");
 };
 
+const hideButtons = () => {
+  returnInputSelector.classList.add("hide");
+  startInputSelector.classList.add("hide");
+  nextInputSelector.classList.add("hide");
+  finishInputSelector.classList.add("hide");
+};
+
 // Moverse entre páginas
 const goHomePage = () => {
   hidePages();
+  hideButtons();
   homePageSelector.classList.remove("hide");
+  startInputSelector.classList.remove("hide");
 };
 
 const goQuestionPage = () => {
   hidePages();
-  totalAnswers();
+  hideButtons();
   questionPageSelector.classList.remove("hide");
+  nextInputSelector.classList.remove("hide");
+  startGame();
 };
 
 const goResultsPage = () => {
