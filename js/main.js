@@ -18,7 +18,7 @@ const nextInputSelector = document.querySelector("#next-input");
 const finishInputSelector = document.querySelector("#finish-input");
 const returnInputSelector = document.querySelector("#return-input");
 
-const newButtonSelector = document.querySelectorAll(".response");
+const answerButtonSelector = document.querySelectorAll(".answer-button");
 
 // Containers
 const questionContainerSelector = document.querySelector("#question-container");
@@ -41,6 +41,7 @@ let usedquestionsArrayObjects = [];
 let incorrectAnswersArray = [];
 let totalAnswersArray = [];
 let selectIncorrectAnswersArray = [];
+let buttonsArray = [];
 
 let questionsString = "";
 let correctAnswerString = "";
@@ -48,7 +49,8 @@ let incorrectAnswersString = "";
 let answerSelected = "";
 let selectCorrectAnswer = "";
 
-let newButton;
+let wrongButton;
+let correctButton;
 
 let indexQuestion = 0;
 let idAnswer = 0;
@@ -86,38 +88,51 @@ const nextQuestionTime = () =>
 const checkAnswer = () => {};
 
 // Seleccionar respuesta
-const selectAnswer = () => {};
-
-// Mostrar respuestas
 const showAnswers = () => {
-  totalAnswersArray.forEach((answer) => {
-    newButton = document.createElement("button");
-    newButton.innerText = answer
+};
 
-    answersContainerSelector.appendChild(newButton);
-  })
+// Creamos las respuestas
+const createAnswers = () => {
+  // Obtenemos la respuesta correcta
+  correctButton = document.createElement("button");
+  correctButton.classList.add("answer-button");
+  correctButton.dataset.correct = true;
+  correctButton.innerText = selectCorrectAnswer;
+  
+  // Creamos todos los botones
+  totalAnswersArray.forEach((answer) => {
+    wrongButton = document.createElement("button");
+    wrongButton.classList.add("answer-button");
+    wrongButton.innerText = answer;
+    
+    answersContainerSelector.appendChild(wrongButton);
+    answersContainerSelector.appendChild(correctButton);
+  });
+
+  console.log(correctButton);
+  showAnswers();
 };
 
 // Mostrar pregunta
-const showQuestion = (selectQuestion) => {
+const createQuestion = (selectQuestion) => {
   questionTextSelector.innerHTML = selectQuestion;
-  showAnswers();
+  createAnswers();
 };
 
 // Preparamos pregunta y respuesta
 const setQuestion = () => {
   selectQuestion = questionsArrayObjects[indexQuestion].question;
-  selectCorrectAnswer = questionsArrayObjects[indexQuestion].correct_answer
+  selectCorrectAnswer = questionsArrayObjects[indexQuestion].correct_answer;
   selectIncorrectAnswersArray =
     questionsArrayObjects[indexQuestion].incorrect_answers;
 
   selectIncorrectAnswersArray.forEach((incorrecAnswer) => {
-    totalAnswersArray.push(incorrecAnswer)
-  })
+    totalAnswersArray.push(incorrecAnswer);
+  });
 
-  totalAnswersArray.push(selectCorrectAnswer)
+  // totalAnswersArray.push(selectCorrectAnswer);
 
-  showQuestion(selectQuestion);
+  createQuestion(selectQuestion);
 };
 
 // Siguiente pregunta
