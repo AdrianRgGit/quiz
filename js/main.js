@@ -22,6 +22,7 @@ const newButtonSelector = document.querySelectorAll(".response");
 
 // Containers
 const questionContainerSelector = document.querySelector("#question-container");
+const answersContainerSelector = document.querySelector("#answers-container");
 
 // Párrafos
 const questionTextSelector = document.querySelector("#question-text");
@@ -32,17 +33,20 @@ const hideSelector = document.querySelectorAll(".hide");
 // Variables globales
 let objectQuestions = {};
 let selectQuestion = {};
+let selectAnswers = {};
 
 let questionsArrayObjects = [];
 let questionsArray = [];
 let usedquestionsArrayObjects = [];
 let incorrectAnswersArray = [];
 let totalAnswersArray = [];
+let selectIncorrectAnswersArray = [];
 
 let questionsString = "";
 let correctAnswerString = "";
 let incorrectAnswersString = "";
 let answerSelected = "";
+let selectCorrectAnswer = "";
 
 let newButton;
 
@@ -64,7 +68,6 @@ axios
       correctAnswerString = objectQuestions.correct_answer;
       incorrectAnswersArray = objectQuestions.incorrect_answers;
       questionsArray.push(questionsString);
-
     });
     // console.log(questionsArrayObjects[2]);
     incorrectAnswersArray.forEach((incorrectAnswer) => {
@@ -88,31 +91,43 @@ const selectAnswer = () => {};
 // Mostrar respuestas
 const showAnswers = () => {
   totalAnswersArray.forEach((answer) => {
-    console.log(answer);
-  });
+    newButton = document.createElement("button");
+    newButton.innerText = answer
+
+    answersContainerSelector.appendChild(newButton);
+  })
 };
 
 // Mostrar pregunta
-const showQuestion = (questionsString) => {
-  questionTextSelector.innerHTML = questionsString;
-  setAnswers();
+const showQuestion = (selectQuestion) => {
+  questionTextSelector.innerHTML = selectQuestion;
+  showAnswers();
 };
 
-// Preparamos respuesta
-const setAnswers = () => {
-  console.log(incorrectAnswersArray);
-  console.log(correctAnswerString);
-};
-
-// Preparamos pregunta
+// Preparamos pregunta y respuesta
 const setQuestion = () => {
-  questionsString = questionsArray[indexQuestion];
-  showQuestion(questionsString);
+  selectQuestion = questionsArrayObjects[indexQuestion].question;
+  selectCorrectAnswer = questionsArrayObjects[indexQuestion].correct_answer
+  selectIncorrectAnswersArray =
+    questionsArrayObjects[indexQuestion].incorrect_answers;
+
+  selectIncorrectAnswersArray.forEach((incorrecAnswer) => {
+    totalAnswersArray.push(incorrecAnswer)
+  })
+
+  totalAnswersArray.push(selectCorrectAnswer)
+
+  showQuestion(selectQuestion);
 };
 
 // Siguiente pregunta
 const nextQuestion = () => {
   indexQuestion++;
+  totalAnswersArray = [];
+
+  while (answersContainerSelector.firstChild) {
+    answersContainerSelector.removeChild(answersContainerSelector.firstChild);
+  }
   setQuestion();
 };
 
