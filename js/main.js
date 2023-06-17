@@ -88,29 +88,35 @@ const nextQuestionTime = () =>
 const checkAnswer = () => {};
 
 // Seleccionar respuesta
-const showAnswers = () => {
-};
+const showAnswers = () => {};
 
 // Creamos las respuestas
 const createAnswers = () => {
   // Obtenemos la respuesta correcta
   correctButton = document.createElement("button");
-  correctButton.classList.add("answer-button");
+  correctButton.classList.add("answer-button", "correct-button");
   correctButton.dataset.correct = true;
   correctButton.innerText = selectCorrectAnswer;
-  
+
   // Creamos todos los botones
   totalAnswersArray.forEach((answer) => {
     wrongButton = document.createElement("button");
-    wrongButton.classList.add("answer-button");
+    wrongButton.classList.add("answer-button", "incorrect-button");
     wrongButton.innerText = answer;
-    
+
     answersContainerSelector.appendChild(wrongButton);
-    answersContainerSelector.appendChild(correctButton);
   });
 
-  console.log(correctButton);
+  answersContainerSelector.appendChild(correctButton);
+
   showAnswers();
+};
+
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 };
 
 // Mostrar pregunta
@@ -130,7 +136,7 @@ const setQuestion = () => {
     totalAnswersArray.push(incorrecAnswer);
   });
 
-  // totalAnswersArray.push(selectCorrectAnswer);
+  totalAnswersArray.push(selectCorrectAnswer);
 
   createQuestion(selectQuestion);
 };
