@@ -32,6 +32,7 @@ const hideSelector = document.querySelectorAll(".hide");
 
 // Variables globales
 let objectQuestions = {};
+let objectAnswers = {};
 let selectQuestion = {};
 let selectAnswers = {};
 
@@ -51,6 +52,7 @@ let selectCorrectAnswer = "";
 
 let wrongButton;
 let correctButton;
+let button;
 
 let indexQuestion = 0;
 let idAnswer = 0;
@@ -71,7 +73,7 @@ axios
       incorrectAnswersArray = objectQuestions.incorrect_answers;
       questionsArray.push(questionsString);
     });
-    // console.log(questionsArrayObjects[2]);
+    // console.log(questionsArrayObjects);
     incorrectAnswersArray.forEach((incorrectAnswer) => {
       incorrectAnswersString = incorrectAnswer;
     });
@@ -92,32 +94,25 @@ const showAnswers = () => {};
 
 // Creamos las respuestas
 const createAnswers = () => {
-  // Obtenemos la respuesta correcta
-  correctButton = document.createElement("button");
-  correctButton.classList.add("answer-button", "correct-button");
-  correctButton.dataset.correct = true;
-  correctButton.innerText = selectCorrectAnswer;
+  buttonsArray.forEach((answer) => {
+    button = document.createElement("button");
+    button.innerText = answer.answer;
 
-  // Creamos todos los botones
-  totalAnswersArray.forEach((answer) => {
-    wrongButton = document.createElement("button");
-    wrongButton.classList.add("answer-button", "incorrect-button");
-    wrongButton.innerText = answer;
-
-    answersContainerSelector.appendChild(wrongButton);
+    if (answer.correct) {
+      button.dataset.correct = true;
+    }
+    answersContainerSelector.appendChild(button);
   });
-
-  answersContainerSelector.appendChild(correctButton);
 
   showAnswers();
 };
 
-const shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-};
+// const shuffle = (array) => {
+//   for (let i = array.length - 1; i > 0; i--) {
+//     const j = Math.floor(Math.random() * (i + 1));
+//     [array[i], array[j]] = [array[j], array[i]];
+//   }
+// };
 
 // Mostrar pregunta
 const createQuestion = (selectQuestion) => {
@@ -132,11 +127,29 @@ const setQuestion = () => {
   selectIncorrectAnswersArray =
     questionsArrayObjects[indexQuestion].incorrect_answers;
 
-  selectIncorrectAnswersArray.forEach((incorrecAnswer) => {
-    totalAnswersArray.push(incorrecAnswer);
+  selectIncorrectAnswersArray.forEach((incorrectAnswer) => {
+    totalAnswersArray.push(incorrectAnswer);
   });
 
-  totalAnswersArray.push(selectCorrectAnswer);
+  totalAnswersArray.forEach((answer) => {
+    objectAnswers.answer = answer;
+    objectAnswers.correct = false;
+    return buttonsArray.push(objectAnswers);
+  });
+
+  let correctAnswer = {
+    answer: selectCorrectAnswer,
+    correct: true,
+  };
+
+  buttonsArray.push(correctAnswer);
+
+  console.log(buttonsArray);
+
+  // console.log(selectQuestion)
+  console.log(selectCorrectAnswer);
+  // console.log(selectIncorrectAnswersArray);
+  // console.log(questionsArrayObjects);
 
   createQuestion(selectQuestion);
 };
