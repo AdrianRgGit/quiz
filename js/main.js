@@ -107,13 +107,6 @@ const createAnswers = () => {
   showAnswers();
 };
 
-// const shuffle = (array) => {
-//   for (let i = array.length - 1; i > 0; i--) {
-//     const j = Math.floor(Math.random() * (i + 1));
-//     [array[i], array[j]] = [array[j], array[i]];
-//   }
-// };
-
 // Mostrar pregunta
 const createQuestion = (selectQuestion) => {
   questionTextSelector.innerHTML = selectQuestion;
@@ -132,18 +125,21 @@ const setQuestion = () => {
   });
 
   totalAnswersArray.forEach((answer) => {
+    buttonsArray.push(objectAnswers);
     objectAnswers.answer = answer;
     objectAnswers.correct = false;
-    return buttonsArray.push(objectAnswers);
+    console.log(objectAnswers);
+    console.log(answer);
+    console.log(buttonsArray);
   });
-
+  
   let correctAnswer = {
     answer: selectCorrectAnswer,
     correct: true,
   };
-
+  
   buttonsArray.push(correctAnswer);
-
+  
   console.log(buttonsArray);
 
   // console.log(selectQuestion)
