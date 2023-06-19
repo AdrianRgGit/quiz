@@ -14,6 +14,7 @@ const graphicsPageSelector = document.querySelector("#graphics-page");
 
 // Inputs
 const startInputSelector = document.querySelector("#start-input");
+const resultsInputSelector = document.querySelector("#results-input");
 const finishInputSelector = document.querySelector("#finish-input");
 const returnInputSelector = document.querySelector("#return-input");
 
@@ -26,8 +27,10 @@ const resultsContainerSelector = document.querySelector("#results-container");
 // Párrafos
 const questionTextSelector = document.querySelector("#question-text");
 const indexQuestionSelector = document.querySelector("#index-question");
+const textResultsSelector = document.querySelector("#text-results");
 const scoreSelector = document.querySelector("#score");
 const questionTitleSelector = document.querySelector("#question-title");
+const resultsSelector = document.querySelector("#results");
 
 // Clases
 const hideSelector = document.querySelectorAll(".hide");
@@ -50,6 +53,7 @@ let answerSelected = "";
 let selectCorrectAnswer = "";
 
 let answerButton;
+let correctAnswerSelector;
 
 let indexQuestion = 0;
 let indexCorrectQuestion = 0;
@@ -88,17 +92,36 @@ const nextQuestionTime = () =>
 // Terminamos el Juego
 const finishQuiz = () => {
   goResultsPage();
-  scoreSelector.innerHTML = indexCorrectQuestion;
+  resultsSelector.innerHTML = "These are your results...";
+
+  // mostramos un texto según el resultado
+
+  if (indexCorrectQuestion == 0) {
+    scoreSelector.innerHTML = "Your correct answers " + indexCorrectQuestion;
+    textResultsSelector.innerHTML = "Pathetic";
+  } else if (indexContainerSelector >= 1 && indexContainerSelector < 5) {
+    textResultsSelector.innerHTML =
+      "You have to keep studying. Good luck next time";
+  } else if (indexContainerSelector >= 5 && indexContainerSelector < 9) {
+    textResultsSelector.innerHTML =
+      "Congratulations, you have passed the quiz!!";
+  } else if (indexContainerSelector == 10) {
+    textResultsSelector.innerHTML = "A 10!!! You are a master of history";
+  } else {
+    textResultsSelector.innerHTML =
+      "Sorry, an error occurred when checking results";
+  }
 };
 
 // Comprobar respuesta
 const checkAnswers = () => {
   // Pintamos los botones
   answersContainerSelector.appendChild(answerButton);
-  console.log(answerButton)
+  console.log(answerButton);
   // El event.target accede al elemento y de ahí le sacamos el dataset.correct. De otra forma no he podido acceder a él
   answerButton.addEventListener("click", (event) => {
     if (event.target.dataset.correct == "true") {
+      correctAnswerSelector.classList.add("btn-success");
       indexCorrectQuestion++;
       console.log("Correcto " + indexCorrectQuestion);
       nextQuestionTime();
@@ -114,7 +137,7 @@ const checkAnswers = () => {
 const createAnswers = () => {
   // Alteramos aleatoriamente el orden de las respuestas
   randomAnswersArray = totalAnswersArray.sort(() => Math.random() - 0.5);
-
+  
   // answersContainerSelector.appendChild(correctButton);
   // Creamos todos los botones
   randomAnswersArray.forEach((answer) => {
@@ -124,9 +147,11 @@ const createAnswers = () => {
 
     // Obtenemos la respuesta correcta y le asignamos un dataset para diferenciarla
     if (answer === selectCorrectAnswer) {
+      answerButton.setAttribute("id", "correct-answer");
       answerButton.dataset.correct = true;
     }
-
+    
+    correctAnswerSelector = document.querySelector("#correct-answer");
     checkAnswers();
   });
 };
@@ -169,6 +194,7 @@ const nextQuestion = () => {
   if (questionsArrayObjects.length === indexQuestion) {
     finishQuiz();
   } else {
+    console.clear();
     setQuestion();
   }
 };
@@ -222,4 +248,5 @@ const goGraphicsPage = () => {
 // Events click
 returnInputSelector.addEventListener("click", goHomePage);
 startInputSelector.addEventListener("click", goQuestionPage);
+resultsInputSelector.addEventListener("click", finishQuiz);
 finishInputSelector.addEventListener("click", goGraphicsPage);

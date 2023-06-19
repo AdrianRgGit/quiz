@@ -6,3 +6,7 @@
     padding: 20px;
     border: solid rgb(121, 224, 238);
 }
+
+.on-click-success{
+    background-color: green;
+}
