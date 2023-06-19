@@ -14,18 +14,20 @@ const graphicsPageSelector = document.querySelector("#graphics-page");
 
 // Inputs
 const startInputSelector = document.querySelector("#start-input");
-const nextInputSelector = document.querySelector("#next-input");
 const finishInputSelector = document.querySelector("#finish-input");
 const returnInputSelector = document.querySelector("#return-input");
-
-const answerButtonSelector = document.querySelectorAll(".answer-button");
 
 // Containers
 const questionContainerSelector = document.querySelector("#question-container");
 const answersContainerSelector = document.querySelector("#answers-container");
+const indexContainerSelector = document.querySelector("#index-container");
+const resultsContainerSelector = document.querySelector("#results-container");
 
 // Párrafos
 const questionTextSelector = document.querySelector("#question-text");
+const indexQuestionSelector = document.querySelector("#index-question");
+const scoreSelector = document.querySelector("#score");
+const questionTitleSelector = document.querySelector("#question-title");
 
 // Clases
 const hideSelector = document.querySelectorAll(".hide");
@@ -77,21 +79,38 @@ axios
 
 // Timers
 const nextQuestionTime = () =>
-  setTimeout(() => console.log("Siguiente pregunta"), 3000);
+  setTimeout(() => {
+    nextQuestion();
+  }, 3000);
 
 // Funcionalidad
 
-// Comprobar respuesta
-const checkAnswer = () => {
-  if (answerButtonSelector.correct === true) {
-    indexCorrectQuestion++;
-  } else {
-    indexIncorrectQuestion++;
-  }
-  // answerButtonSelector.addEventListener("click", checkAnswer);
+// Terminamos el Juego
+const finishQuiz = () => {
+  goResultsPage();
+  scoreSelector.innerHTML = indexCorrectQuestion;
 };
 
-// Creamos las respuestas
+// Comprobar respuesta
+const checkAnswers = () => {
+  // Pintamos los botones
+  answersContainerSelector.appendChild(answerButton);
+  console.log(answerButton)
+  // El event.target accede al elemento y de ahí le sacamos el dataset.correct. De otra forma no he podido acceder a él
+  answerButton.addEventListener("click", (event) => {
+    if (event.target.dataset.correct == "true") {
+      indexCorrectQuestion++;
+      console.log("Correcto " + indexCorrectQuestion);
+      nextQuestionTime();
+    } else {
+      indexIncorrectQuestion++;
+      console.log("Incorrecto " + indexIncorrectQuestion);
+      nextQuestionTime();
+    }
+  });
+};
+
+// Creamos los botones de las respuestas y diferenciamos la correcta de las incorrectas
 const createAnswers = () => {
   // Alteramos aleatoriamente el orden de las respuestas
   randomAnswersArray = totalAnswersArray.sort(() => Math.random() - 0.5);
@@ -100,7 +119,7 @@ const createAnswers = () => {
   // Creamos todos los botones
   randomAnswersArray.forEach((answer) => {
     answerButton = document.createElement("button");
-    answerButton.classList.add("answer-button");
+    answerButton.classList.add("answer-button", "btn", "btn-secondary", "m-1");
     answerButton.innerText = answer;
 
     // Obtenemos la respuesta correcta y le asignamos un dataset para diferenciarla
@@ -108,13 +127,15 @@ const createAnswers = () => {
       answerButton.dataset.correct = true;
     }
 
-    answersContainerSelector.appendChild(answerButton);
+    checkAnswers();
   });
-  checkAnswer();
 };
 
 // Mostrar pregunta
 const createQuestion = (selectQuestion) => {
+  questionTitleSelector.innerHTML = `Question number <span class = "text-warning">${
+    indexQuestion + 1
+  }</span>`;
   questionTextSelector.innerHTML = selectQuestion;
   createAnswers();
 };
@@ -139,16 +160,23 @@ const setQuestion = () => {
 const nextQuestion = () => {
   indexQuestion++;
   totalAnswersArray = [];
+  indexQuestionSelector.innerHTML = `${indexQuestion + 1} / 10 `;
 
   while (answersContainerSelector.firstChild) {
     answersContainerSelector.removeChild(answersContainerSelector.firstChild);
   }
-  setQuestion();
+
+  if (questionsArrayObjects.length === indexQuestion) {
+    finishQuiz();
+  } else {
+    setQuestion();
+  }
 };
 
 // Empezamos el juego
 const startGame = () => {
   indexQuestion = 0;
+  indexQuestionSelector.innerHTML = `${indexQuestion + 1} / 10 `;
   setQuestion();
 };
 
@@ -163,7 +191,6 @@ const hidePages = () => {
 const hideButtons = () => {
   returnInputSelector.classList.add("hide");
   startInputSelector.classList.add("hide");
-  nextInputSelector.classList.add("hide");
   finishInputSelector.classList.add("hide");
 };
 
@@ -179,7 +206,6 @@ const goQuestionPage = () => {
   hidePages();
   hideButtons();
   questionPageSelector.classList.remove("hide");
-  nextInputSelector.classList.remove("hide");
   startGame();
 };
 
@@ -196,5 +222,4 @@ const goGraphicsPage = () => {
 // Events click
 returnInputSelector.addEventListener("click", goHomePage);
 startInputSelector.addEventListener("click", goQuestionPage);
-nextInputSelector.addEventListener("click", nextQuestion);
 finishInputSelector.addEventListener("click", goGraphicsPage);

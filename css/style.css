@@ -2,3 +2,7 @@
     display: none;
 }
 
+.border-blue{
+    padding: 20px;
+    border: solid rgb(121, 224, 238);
+}
