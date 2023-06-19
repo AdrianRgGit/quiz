@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <title>Quiz</title>
-    <link rel="icon" type="image/x-icon" href="assets/icon/bx-party.svg">
+    <link rel="icon" type="image/x-icon" href="assets/icon/bx-party.svg" />
   </head>
 
   <body>
@@ -60,7 +60,10 @@
         <div id="question-container">
           <p id="question-text"></p>
         </div>
-        <div id="answers-container" class="d-flex justify-content-center flex-column"></div>
+        <div
+          id="answers-container"
+          class="d-flex justify-content-center flex-column"
+        ></div>
 
         <div id="index-container">
           <p id="index-question" class="text-center mt-5"></p>
@@ -70,14 +73,17 @@
       <!-- Fin Vista preguntas -->
 
       <!-- Vista results -->
-      <div id="results-page" class="hide border-blue">
+      <div id="results-page" class="hide border-blue text-center justify-content-center align-items-center">
         <h1 id="results"></h1>
-
-        <div id="results-container">
-          <p id="text-results"></p>
+        
+        <div class="score-container circle-background display-1 mx-auto m-5">
           <p id="score"></p>
         </div>
 
+        <div id="results-container" class="display-4">
+          <p id="text-results"></p>
+        </div>
+        
         <input
           type="button"
           value="Finish"

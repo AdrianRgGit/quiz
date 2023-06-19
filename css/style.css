@@ -1,12 +1,17 @@
-.hide{
-    display: none;
+.hide {
+  display: none;
 }
 
-.border-blue{
-    padding: 20px;
-    border: solid rgb(121, 224, 238);
+.border-blue {
+  padding: 20px;
+  border: solid rgb(121, 224, 238);
 }
 
-.on-click-success{
-    background-color: green;
+.circle-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 200px;
+  border-radius: 50%;
 }
