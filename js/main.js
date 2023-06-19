@@ -32,17 +32,14 @@ const hideSelector = document.querySelectorAll(".hide");
 
 // Variables globales
 let objectQuestions = {};
-let objectAnswers = {};
 let selectQuestion = {};
-let selectAnswers = {};
 
 let questionsArrayObjects = [];
 let questionsArray = [];
-let usedquestionsArrayObjects = [];
 let incorrectAnswersArray = [];
 let totalAnswersArray = [];
 let selectIncorrectAnswersArray = [];
-let buttonsArray = [];
+let randomAnswersArray = [];
 
 let questionsString = "";
 let correctAnswerString = "";
@@ -50,12 +47,11 @@ let incorrectAnswersString = "";
 let answerSelected = "";
 let selectCorrectAnswer = "";
 
-let wrongButton;
-let correctButton;
-let button;
+let answerButton;
 
 let indexQuestion = 0;
-let idAnswer = 0;
+let indexCorrectQuestion = 0;
+let indexIncorrectQuestion = 0;
 
 // Api. En la api puedes seleccionar el número de pregutnas y su dificultad y tipo.
 // Obtenemos los datos de la api y los guardamos en variables globales
@@ -73,12 +69,11 @@ axios
       incorrectAnswersArray = objectQuestions.incorrect_answers;
       questionsArray.push(questionsString);
     });
-    // console.log(questionsArrayObjects);
     incorrectAnswersArray.forEach((incorrectAnswer) => {
       incorrectAnswersString = incorrectAnswer;
     });
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.error(err));
 
 // Timers
 const nextQuestionTime = () =>
@@ -87,24 +82,35 @@ const nextQuestionTime = () =>
 // Funcionalidad
 
 // Comprobar respuesta
-const checkAnswer = () => {};
-
-// Seleccionar respuesta
-const showAnswers = () => {};
+const checkAnswer = () => {
+  if (answerButtonSelector.correct === true) {
+    indexCorrectQuestion++;
+  } else {
+    indexIncorrectQuestion++;
+  }
+  // answerButtonSelector.addEventListener("click", checkAnswer);
+};
 
 // Creamos las respuestas
 const createAnswers = () => {
-  buttonsArray.forEach((answer) => {
-    button = document.createElement("button");
-    button.innerText = answer.answer;
+  // Alteramos aleatoriamente el orden de las respuestas
+  randomAnswersArray = totalAnswersArray.sort(() => Math.random() - 0.5);
 
-    if (answer.correct) {
-      button.dataset.correct = true;
+  // answersContainerSelector.appendChild(correctButton);
+  // Creamos todos los botones
+  randomAnswersArray.forEach((answer) => {
+    answerButton = document.createElement("button");
+    answerButton.classList.add("answer-button");
+    answerButton.innerText = answer;
+
+    // Obtenemos la respuesta correcta y le asignamos un dataset para diferenciarla
+    if (answer === selectCorrectAnswer) {
+      answerButton.dataset.correct = true;
     }
-    answersContainerSelector.appendChild(button);
-  });
 
-  showAnswers();
+    answersContainerSelector.appendChild(answerButton);
+  });
+  checkAnswer();
 };
 
 // Mostrar pregunta
@@ -124,28 +130,7 @@ const setQuestion = () => {
     totalAnswersArray.push(incorrectAnswer);
   });
 
-  totalAnswersArray.forEach((answer) => {
-    buttonsArray.push(objectAnswers);
-    objectAnswers.answer = answer;
-    objectAnswers.correct = false;
-    console.log(objectAnswers);
-    console.log(answer);
-    console.log(buttonsArray);
-  });
-  
-  let correctAnswer = {
-    answer: selectCorrectAnswer,
-    correct: true,
-  };
-  
-  buttonsArray.push(correctAnswer);
-  
-  console.log(buttonsArray);
-
-  // console.log(selectQuestion)
-  console.log(selectCorrectAnswer);
-  // console.log(selectIncorrectAnswersArray);
-  // console.log(questionsArrayObjects);
+  totalAnswersArray.push(selectCorrectAnswer);
 
   createQuestion(selectQuestion);
 };
