@@ -199,6 +199,8 @@ const nextQuestion = () => {
 // Empezamos el juego
 const startGame = () => {
   indexQuestion = 0;
+  indexCorrectQuestion = 0;
+  indexIncorrectQuestion = 0;
   indexQuestionSelector.innerHTML = `${indexQuestion + 1} / 10 `;
   setQuestion();
 };
