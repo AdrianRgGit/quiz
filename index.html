@@ -34,8 +34,30 @@
     >
       <!-- Vista principal -->
       <div id="home-page" class="border-blue text-center">
-        <h1>Welcome to the <span class="text-warning">History Quiz!</span></h1>
+        <h1 class="mb-3">
+          Welcome to the <span class="text-warning">History Quiz!</span>
+        </h1>
         <p>Are you ready?</p>
+
+        <form>
+          <div class="form-group">
+            <input
+              type="email"
+              class="form-control text-center mb-3"
+              id="email-input"
+              placeholder="Enter email"
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="name"
+              class="form-control text-center mb-3"
+              id="name-input"
+              placeholder="Enter name"
+            />
+          </div>
+        </form>
 
         <input
           type="button"
@@ -46,8 +68,8 @@
 
         <input
           type="button"
-          value="Results"
-          id="results-input"
+          value="Graphics"
+          id="graphics-input"
           class="btn btn-info"
         />
       </div>
@@ -73,31 +95,53 @@
       <!-- Fin Vista preguntas -->
 
       <!-- Vista results -->
-      <div id="results-page" class="hide border-blue text-center justify-content-center align-items-center">
+      <div
+        id="results-page"
+        class="hide border-blue text-center justify-content-center align-items-center"
+      >
         <h1 id="results"></h1>
-        
-        <div class="score-container circle-background display-1 mx-auto m-5">
+
+        <div
+          id="score-container"
+          class="circle-background display-1 mx-auto m-5"
+        >
           <p id="score"></p>
         </div>
 
         <div id="results-container" class="display-4">
           <p id="text-results"></p>
         </div>
-        
+
         <input
           type="button"
-          value="Finish"
-          id="finish-input"
-          class="btn btn-primary"
-        />
-        <input
-          type="button"
-          value="Return"
-          id="return-input"
-          class="btn btn-primary"
+          value="Next"
+          id="next-input"
+          class="btn btn-info"
         />
       </div>
       <!-- Fin Vista results -->
+
+      <!-- Vista restart -->
+      <div
+        id="restart-page"
+        class="hide border-blue text-center justify-content-center align-items-center"
+      >
+        <input
+          type="button"
+          value="Try Again!"
+          id="restart-input"
+          class="btn btn-info"
+        />
+
+        <input
+          type="button"
+          value="Check graphics"
+          id="finish-input"
+          class="btn btn-info"
+        />
+      </div>
+
+      <!-- Fin Vista restart -->
 
       <!-- Vista graphics -->
       <div id="graphics-page" class="hide border-blue">

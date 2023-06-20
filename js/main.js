@@ -11,12 +11,13 @@ const homePageSelector = document.querySelector("#home-page");
 const questionPageSelector = document.querySelector("#question-page");
 const resultsPageSelector = document.querySelector("#results-page");
 const graphicsPageSelector = document.querySelector("#graphics-page");
+const restartPageSelector = document.querySelector("#restart-page");
 
 // Inputs
 const startInputSelector = document.querySelector("#start-input");
-const resultsInputSelector = document.querySelector("#results-input");
-const finishInputSelector = document.querySelector("#finish-input");
-const returnInputSelector = document.querySelector("#return-input");
+const graphicsInputSelector = document.querySelector("#graphics-input");
+const nextInputSelector = document.querySelector("#next-input");
+const restartInputSelector = document.querySelector("#restart-input");
 
 // Containers
 const questionContainerSelector = document.querySelector("#question-container");
@@ -93,31 +94,18 @@ const nextQuestionTime = () =>
 const finishQuiz = () => {
   goResultsPage();
   resultsSelector.innerHTML = "These are your results...";
+  console.log(scoreContainerSelector);
 
   // mostramos un texto según el resultado
-
-  if (indexCorrectQuestion == 0) {
-    textResultsSelector.innerHTML = "Pathetic";
+  if (indexCorrectQuestion < 5) {
     scoreSelector.innerHTML = indexCorrectQuestion + "/10";
     scoreContainerSelector.classList.add("bg-danger");
-
-  } else if (indexContainerSelector >= 1 && indexContainerSelector < 5) {
-    textResultsSelector.innerHTML =
-      "You have to keep studying. Good luck next time";
-    scoreSelector.innerHTML = indexCorrectQuestion + "/10";
-    scoreContainerSelector.classList.add("bg-danger");
-  } else if (indexContainerSelector >= 5 && indexContainerSelector < 9) {
-    textResultsSelector.innerHTML =
-      "Congratulations, you have passed the quiz!!";
-    scoreSelector.innerHTML = indexCorrectQuestion + "/10";
-    scoreContainerSelector.classList.add("bg-success");
-  } else if (indexContainerSelector == 10) {
-    textResultsSelector.innerHTML = "A 10!!! You are a master of history";
-    scoreSelector.innerHTML = indexCorrectQuestion + "/10";
-    scoreContainerSelector.classList.add("bg-success");
+    textResultsSelector.innerHTML = "You failed the test, keep studying";
   } else {
+    scoreSelector.innerHTML = indexCorrectQuestion + "/10";
+    scoreContainerSelector.classList.add("bg-success");
     textResultsSelector.innerHTML =
-      "Sorry, an error occurred when checking results";
+      "You have passed the test, congratulations!";
   }
 };
 
@@ -130,7 +118,7 @@ const checkAnswers = () => {
   answerButton.addEventListener("click", (event) => {
     if (event.target.dataset.correct == "true") {
       // si la respuesta correcta está en la última opción esta línea da error
-      correctAnswerSelector.classList.add("btn-success");
+      // correctAnswerSelector.classList.add("btn-success");
       indexCorrectQuestion++;
       console.log("Correcto " + indexCorrectQuestion);
       nextQuestionTime();
@@ -221,12 +209,12 @@ const hidePages = () => {
   questionPageSelector.classList.add("hide");
   resultsPageSelector.classList.add("hide");
   graphicsPageSelector.classList.add("hide");
+  restartPageSelector.classList.add("hide");
 };
 
 const hideButtons = () => {
-  returnInputSelector.classList.add("hide");
   startInputSelector.classList.add("hide");
-  finishInputSelector.classList.add("hide");
+  graphicsInputSelector.classList.add("hide");
 };
 
 // Moverse entre páginas
@@ -249,13 +237,19 @@ const goResultsPage = () => {
   resultsPageSelector.classList.remove("hide");
 };
 
+const goRestartPage = () => {
+  hidePages();
+  hideButtons();
+  restartPageSelector.classList.remove("hide");
+}
+
 const goGraphicsPage = () => {
   hidePages();
   graphicsPageSelector.classList.remove("hide");
 };
 
 // Events click
-returnInputSelector.addEventListener("click", goHomePage);
 startInputSelector.addEventListener("click", goQuestionPage);
-resultsInputSelector.addEventListener("click", finishQuiz);
-finishInputSelector.addEventListener("click", goGraphicsPage);
+graphicsInputSelector.addEventListener("click", goGraphicsPage);
+nextInputSelector.addEventListener("click", goRestartPage);
+restartInputSelector.addEventListener("click", goHomePage);
