@@ -39,6 +39,7 @@
         </h1>
         <p>Are you ready?</p>
 
+        <form>
           <div class="form-group">
             <input
               type="name"
@@ -49,29 +50,27 @@
           </div>
         </form>
 
-        <a class="actionBtn1">
-	 <span class="hover"></span>
-	 <span>Preview</span>
-</a>
-        
-        <input
-          type="button"
-          value="Start"
-          id="start-input"
-          class="btn btn-info"
-        />
+        <a class="actionBtn1 btn btn-info" id="start-input">
+          <span class="hover"></span>
+          <span>Start</span>
+        </a>
 
-        <input
-          type="button"
-          value="Graphics"
-          id="graphics-input"
-          class="btn btn-info"
-        />
+        <a class="actionBtn1 btn btn-info" id="graphics-input">
+          <span class="hover"></span>
+          <span>Graphics</span>
+        </a>
       </div>
       <!-- Fin Vista principal -->
 
       <!-- Vista preguntas -->
       <div id="question-page" class="hide border-blue text-center">
+        <div class="newtons-cradle">
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+          <div class="newtons-cradle__dot"></div>
+        </div>
+
         <h1 id="question-title"></h1>
 
         <div id="question-container">
@@ -107,12 +106,10 @@
           <p id="text-results"></p>
         </div>
 
-        <input
-          type="button"
-          value="Next"
-          id="next-input"
-          class="btn btn-info"
-        />
+        <a class="actionBtn1 btn btn-info" id="next-input">
+          <span class="hover"></span>
+          <span>Next</span>
+        </a>
       </div>
       <!-- Fin Vista results -->
 
@@ -123,19 +120,15 @@
       >
         <p class="display-4">Do you want to try again?</p>
 
-        <input
-          type="button"
-          value="Try Again!"
-          id="restart-input"
-          class="btn btn-info"
-        />
+        <a class="actionBtn1 btn btn-info" id="restart-input">
+          <span class="hover"></span>
+          <span>Try Again!</span>
+        </a>
 
-        <input
-          type="button"
-          value="Check graphics"
-          id="finish-input"
-          class="btn btn-info"
-        />
+        <a class="actionBtn1 btn btn-info" id="finish-input">
+          <span class="hover"></span>
+          <span>Check Results</span>
+        </a>
       </div>
 
       <!-- Fin Vista restart -->
