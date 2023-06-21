@@ -1,8 +1,23 @@
+.body-background {
+  background-image: url(../assets/backgrounds/jason-leung-Xaanw0s0pMk-unsplash.jpg);
+}
+
+.pass-quiz {
+  background-color: #08ea31;
+  background-image: linear-gradient(0deg, #08ea31 0%, #2af598 100%);
+}
+
+.suspend-quiz {
+  background-color: #ff933b;
+  background-image: linear-gradient(147deg, #ff933b 0%, #ff2525 74%);
+}
+
 .hide {
   display: none;
 }
 
 .border-blue {
+  background-color: white;
   padding: 20px;
   border: solid rgb(121, 224, 238);
 }
