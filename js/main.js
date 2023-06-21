@@ -1,11 +1,4 @@
 // Selectores (id)
-// Nav bar
-const navBarSelector = document.querySelector("#nav-bar");
-const homePageNavSelector = document.querySelector("#home-page-nav");
-const questionPageNavSelector = document.querySelector("#question-page-nav");
-const resultsPageNavSelector = document.querySelector("#results-page-nav");
-const graphicsPageNavSelector = document.querySelector("#graphics-page-nav");
-
 // Páginas
 const homePageSelector = document.querySelector("#home-page");
 const questionPageSelector = document.querySelector("#question-page");
@@ -14,10 +7,20 @@ const graphicsPageSelector = document.querySelector("#graphics-page");
 const restartPageSelector = document.querySelector("#restart-page");
 
 // Inputs
+// Formularios
+const formUserSelector = document.querySelector("#form-user");
+
+// Botones
 const startInputSelector = document.querySelector("#start-input");
 const graphicsInputSelector = document.querySelector("#graphics-input");
 const nextInputSelector = document.querySelector("#next-input");
 const restartInputSelector = document.querySelector("#restart-input");
+const returnInputSelector = document.querySelector("#return-input");
+const finishInputSelector = document.querySelector("#finish-input");
+
+// Entradas de texto
+const emailInputSelector = document.querySelector("#email-input");
+const nameInputSelector = document.querySelector("#name-input");
 
 // Containers
 const questionContainerSelector = document.querySelector("#question-container");
@@ -25,6 +28,7 @@ const answersContainerSelector = document.querySelector("#answers-container");
 const indexContainerSelector = document.querySelector("#index-container");
 const resultsContainerSelector = document.querySelector("#results-container");
 const scoreContainerSelector = document.querySelector("#score-container");
+const userCardSelector = document.querySelector("#user-card");
 
 // Párrafos
 const questionTextSelector = document.querySelector("#question-text");
@@ -40,6 +44,7 @@ const hideSelector = document.querySelectorAll(".hide");
 // Variables globales
 let objectQuestions = {};
 let selectQuestion = {};
+let user = {};
 
 let questionsArrayObjects = [];
 let questionsArray = [];
@@ -53,6 +58,11 @@ let correctAnswerString = "";
 let incorrectAnswersString = "";
 let answerSelected = "";
 let selectCorrectAnswer = "";
+let userName = "";
+let userEmail = "";
+let keyUser = "";
+
+let saveUserName = "";
 
 let answerButton;
 let correctAnswerSelector;
@@ -87,9 +97,35 @@ axios
 const nextQuestionTime = () =>
   setTimeout(() => {
     nextQuestion();
-  }, 3000);
+  }, 1500);
 
 // Funcionalidad
+// Registramos usuario
+const createUserCard = () => {
+  const getUser = JSON.parse(localStorage.getItem(keyUser));
+
+  // Me da null al iniciar directamente desde el botón de graphics
+  userCardSelector.innerHTML += `
+  <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+  <div class="card-header">${getUser.name} </div>
+  <div class="card-body">
+    <h4 class="card-title">${getUser.score} </h4>
+  </div>
+</div>
+  `;
+};
+
+const userRegister = () => {
+  user = {
+    name: nameInputSelector.value,
+    score: indexCorrectQuestion,
+  };
+
+  keyUser = nameInputSelector.value;
+
+  localStorage.setItem(keyUser, JSON.stringify(user));
+};
+
 // Terminamos el Juego
 const finishQuiz = () => {
   goResultsPage();
@@ -190,6 +226,7 @@ const nextQuestion = () => {
 
   if (questionsArrayObjects.length === indexQuestion) {
     finishQuiz();
+    userRegister();
   } else {
     console.clear();
     setQuestion();
@@ -210,8 +247,8 @@ const hidePages = () => {
   homePageSelector.classList.add("hide");
   questionPageSelector.classList.add("hide");
   resultsPageSelector.classList.add("hide");
-  graphicsPageSelector.classList.add("hide");
   restartPageSelector.classList.add("hide");
+  graphicsPageSelector.classList.add("hide");
 };
 
 const hideButtons = () => {
@@ -243,15 +280,22 @@ const goRestartPage = () => {
   hidePages();
   hideButtons();
   restartPageSelector.classList.remove("hide");
-}
+};
 
 const goGraphicsPage = () => {
   hidePages();
+  createUserCard();
   graphicsPageSelector.classList.remove("hide");
 };
 
 // Events click
 startInputSelector.addEventListener("click", goQuestionPage);
-graphicsInputSelector.addEventListener("click", goGraphicsPage);
+// startInputSelector.addEventListener("click", userRegister);
 nextInputSelector.addEventListener("click", goRestartPage);
+// No me dejaba reutilizar las funciones no se por qué, por eso creo dos id diferentes para una acción
 restartInputSelector.addEventListener("click", goHomePage);
+returnInputSelector.addEventListener("click", goHomePage);
+graphicsInputSelector.addEventListener("click", goGraphicsPage);
+finishInputSelector.addEventListener("click", goGraphicsPage);
+
+// events submit

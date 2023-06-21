@@ -39,16 +39,6 @@
         </h1>
         <p>Are you ready?</p>
 
-        <form>
-          <div class="form-group">
-            <input
-              type="email"
-              class="form-control text-center mb-3"
-              id="email-input"
-              placeholder="Enter email"
-            />
-          </div>
-
           <div class="form-group">
             <input
               type="name"
@@ -59,6 +49,11 @@
           </div>
         </form>
 
+        <a class="actionBtn1">
+	 <span class="hover"></span>
+	 <span>Preview</span>
+</a>
+        
         <input
           type="button"
           value="Start"
@@ -126,6 +121,8 @@
         id="restart-page"
         class="hide border-blue text-center justify-content-center align-items-center"
       >
+        <p class="display-4">Do you want to try again?</p>
+
         <input
           type="button"
           value="Try Again!"
@@ -144,8 +141,22 @@
       <!-- Fin Vista restart -->
 
       <!-- Vista graphics -->
-      <div id="graphics-page" class="hide border-blue">
-        <h1>Esta es la pantalla de graphics</h1>
+      <div
+        id="graphics-page"
+        class="hide border-blue text-center justify-content-center align-items-center"
+      >
+        <div id="user-card"></div>
+
+        <div id="chartContainer">
+          <canvas id="chart"></canvas>
+        </div>
+
+        <input
+          type="button"
+          value="Return"
+          id="return-input"
+          class="btn btn-info"
+        />
       </div>
       <!-- Fin Vista graphics -->
 
