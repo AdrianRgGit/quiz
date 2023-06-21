@@ -135,11 +135,11 @@ const finishQuiz = () => {
   // mostramos un texto según el resultado
   if (indexCorrectQuestion < 5) {
     scoreSelector.innerHTML = indexCorrectQuestion + "/10";
-    scoreContainerSelector.classList.add("suspend-quiz");
+    scoreContainerSelector.classList.add("bg-danger");
     textResultsSelector.innerHTML = "You failed the test, keep studying";
   } else {
     scoreSelector.innerHTML = indexCorrectQuestion + "/10";
-    scoreContainerSelector.classList.add("pass-quiz");
+    scoreContainerSelector.classList.add("bg-success");
     textResultsSelector.innerHTML =
       "You have passed the test, congratulations!";
   }
