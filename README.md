@@ -46,7 +46,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## Sobre el proyecto ✏️
+## About the project ✏️
 
 Hello everyone, I present to you the Quiz! This project consists of a mini-game where we will answer 10 questions about history. The quiz will be like an exam, so we will know our score at the end!
 
@@ -85,10 +85,10 @@ And lest I forget, the site is totally spa-focused. Thank you for your participa
 ## Web preview 📺
 
 - Home page:
-  ![foto]()
+  ![foto](assets/images/Quiz%20-%20Google%20Chrome%202023-06-21%2019-10-59.gif)
 
 - Questions page:
-  ![foto]()
+  ![foto](assets/images/Quiz%20-%20Google%20Chrome%202023-06-21%2019-10-29%20(online-video-cutter.com).gif)
 
 - Results page:
   ![foto](assets/images/passed.png)
