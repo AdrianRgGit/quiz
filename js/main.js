@@ -7,8 +7,6 @@ const graphicsPageSelector = document.querySelector("#graphics-page");
 const restartPageSelector = document.querySelector("#restart-page");
 
 // Inputs
-// Formularios
-const formUserSelector = document.querySelector("#form-user");
 
 // Botones
 const startInputSelector = document.querySelector("#start-input");
@@ -19,14 +17,10 @@ const returnInputSelector = document.querySelector("#return-input");
 const finishInputSelector = document.querySelector("#finish-input");
 
 // Entradas de texto
-const emailInputSelector = document.querySelector("#email-input");
 const nameInputSelector = document.querySelector("#name-input");
 
 // Containers
-const questionContainerSelector = document.querySelector("#question-container");
 const answersContainerSelector = document.querySelector("#answers-container");
-const indexContainerSelector = document.querySelector("#index-container");
-const resultsContainerSelector = document.querySelector("#results-container");
 const scoreContainerSelector = document.querySelector("#score-container");
 const userCardSelector = document.querySelector("#user-card");
 
@@ -37,9 +31,6 @@ const textResultsSelector = document.querySelector("#text-results");
 const scoreSelector = document.querySelector("#score");
 const questionTitleSelector = document.querySelector("#question-title");
 const resultsSelector = document.querySelector("#results");
-
-// Clases
-const hideSelector = document.querySelectorAll(".hide");
 
 // Variables globales
 let objectQuestions = {};
@@ -56,13 +47,8 @@ let randomAnswersArray = [];
 let questionsString = "";
 let correctAnswerString = "";
 let incorrectAnswersString = "";
-let answerSelected = "";
 let selectCorrectAnswer = "";
-let userName = "";
-let userEmail = "";
 let keyUser = "";
-
-let saveUserName = "";
 
 let answerButton;
 let correctAnswerSelector;
@@ -154,7 +140,6 @@ const checkAnswers = () => {
   answerButton.addEventListener("click", (event) => {
     if (event.target.dataset.correct == "true") {
       // si la respuesta correcta está en la última opción esta línea da error
-      // correctAnswerSelector.classList.add("btn-success");
       indexCorrectQuestion++;
       console.log("Correcto " + indexCorrectQuestion);
       nextQuestionTime();
