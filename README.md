@@ -85,10 +85,10 @@ And lest I forget, the site is totally spa-focused. Thank you for your participa
 ## Web preview 📺
 
 - Home page:
-  ![foto](assets/images/Quiz%20-%20Google%20Chrome%202023-06-21%2019-10-59.gif)
+  ![foto](assets/images/Quiz%20-%20Google%20Chrome%202023-06-21%2019-10-29%20(online-video-cutter.com).gif)
 
 - Questions page:
-  ![foto](assets/images/Quiz%20-%20Google%20Chrome%202023-06-21%2019-10-29%20(online-video-cutter.com).gif)
+  ![foto](assets/images/Quiz%20-%20Google%20Chrome%202023-06-21%2019-10-59.gif)
 
 - Results page:
   ![foto](assets/images/passed.png)
